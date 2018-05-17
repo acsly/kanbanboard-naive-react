@@ -10,7 +10,9 @@ const column = (props) => (
             <button onClick={props.newCardClicked}>new</button>
         </header>
         <div>
-            <Cards cards={props.cards}/>
+            <Cards
+                cards={props.cards}
+                deleteCardClicked={props.deleteCardClicked} />
         </div>
     </div>
 );
