@@ -5,7 +5,7 @@ import Columns from '../Columns/Columns';
 
 const board = (props) => (
     <div className={classes.Board}>
-        <Columns />
+        <Columns columns={props.columns} />
     </div>
 );
 
