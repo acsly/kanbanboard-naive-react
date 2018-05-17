@@ -7,9 +7,9 @@ import Board from '../components/Board/Board';
 class App extends Component {
 
   state = {
+    activeBoardIndex: 0,
     boards: [
       {
-        id: 1,
         name: "first board",
         columns: [
           {
@@ -26,11 +26,18 @@ class App extends Component {
     ]
   }
 
+  newColumnHandler = () => {
+    const boards = this.state.boards;
+    boards[this.state.activeBoardIndex].columns.push({ name: "New Column" });
+    console.log(boards);
+    this.setState({ boards: boards });
+  };
+
   render() {
     return (
       <div className={classes.App}>
-        <Toolbar />
-        <Board board={this.state.boards[0]}/>
+        <Toolbar newColumnClicked={this.newColumnHandler} />
+        <Board board={this.state.boards[0]} />
       </div>
     );
   }

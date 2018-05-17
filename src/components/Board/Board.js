@@ -1,11 +1,11 @@
 import React from 'react';
 import classes from './Board.css';
 
+import Columns from '../Columns/Columns';
+
 const board = (props) => (
     <div className={classes.Board}>
-        <div>{props.board.columns[0].name}</div>
-        <div>{props.board.columns[1].name}</div>
-        <div>{props.board.columns[2].name}</div>
+        <Columns />
     </div>
 );
 
