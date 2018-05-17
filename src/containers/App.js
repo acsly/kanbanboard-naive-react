@@ -96,12 +96,11 @@ class App extends Component {
   };
 
   newCardHandler = (index) => {
-    console.log(index);
     const newId = this.getNewId();
     const boards = this.state.boards.slice();
     boards[this.state.activeBoardIndex].columns[index].cards.push(this.createNewCardStructure(newId));
     this.setState({ boards: boards, idIterator: newId });
-    
+
   };
 
   /// Hepler Methods
@@ -137,8 +136,8 @@ class App extends Component {
           newColumnClicked={this.newColumnHandler} />
         <Board
           board={this.state.boards[this.state.activeBoardIndex]}
-          columns={this.state.boards[this.state.activeBoardIndex].columns} 
-          newCardClicked={this.newCardHandler}/>
+          columns={this.state.boards[this.state.activeBoardIndex].columns}
+          newCardClicked={this.newCardHandler} />
       </div>
     );
   }

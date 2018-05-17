@@ -1,6 +1,7 @@
 .Toolbar {
     text-align: left;
-    height: 80px;
+    height: 13%;
+    min-height: 70px;
     background-color: gray;
 }
 
