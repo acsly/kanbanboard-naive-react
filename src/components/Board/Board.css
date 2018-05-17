@@ -1,6 +1,7 @@
 .Board {
     padding: 5px;
     max-width: 100%;
+    min-height: 100%;
     overflow: auto;
     display: flex;
     flex-direction: row;
