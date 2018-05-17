@@ -110,8 +110,18 @@ class App extends Component {
     cards = cards.filter(c => {
       return c.id !== id;
     });
-    //console.log(cards);
     boards[this.state.activeBoardIndex].columns[index].cards = cards;
+    this.setState({ boards: boards });
+  };
+
+  deleteColumnHandler = (id) => {
+    console.log(id);
+    const boards = this.state.boards.slice();
+    let columns = boards[this.state.activeBoardIndex].columns;
+    columns = columns.filter(c => {
+      return c.id !== id;
+    });
+    boards[this.state.activeBoardIndex].columns = columns;
     this.setState({ boards: boards });
   };
 
@@ -150,7 +160,8 @@ class App extends Component {
           board={this.state.boards[this.state.activeBoardIndex]}
           columns={this.state.boards[this.state.activeBoardIndex].columns}
           newCardClicked={this.newCardHandler}
-          deleteCardClicked={this.deleteCardHandler}/>
+          deleteCardClicked={this.deleteCardHandler}
+          deleteColumnClicked={this.deleteColumnHandler}/>
       </div>
     );
   }
