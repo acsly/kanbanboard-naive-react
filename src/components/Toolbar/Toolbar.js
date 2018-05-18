@@ -11,7 +11,7 @@ const toolbar = (props) => (
         <img className={classes.logo} alt="logo of the project" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTA2vkyldAFInyfe8TlfWZvwisxi_7oTRfj5eex8GpbX0_U4viCgQ" />
 
         <div className={classes.toolbarRight}>
-            <button>Add New Card</button>
+            <button onClick={props.newCardGenericClicked}>Add New Card</button>
         </div>
     </div>
 );

@@ -3,81 +3,52 @@ import classes from './App.css';
 
 import Toolbar from '../components/Toolbar/Toolbar';
 import Board from '../components/Board/Board';
+import Modal from '../components/Modal/Modal';
+import Cardform from '../components/Cardform/Cardform';
 
 class App extends Component {
 
   /// Application State
   state = {
-    idIterator: 1012,
+    idIterator: 1006,
     activeBoardIndex: 0,
+    displayModel: false,
     boards: [
       {
         id: 1000,
-        name: "first board",
+        name: "Default Board",
         columns: [
           {
             id: 1001,
-            name: "to do",
+            name: "To Do",
             cards: [
               {
                 id: 1002,
                 title: "card 1",
                 description: "card 1 description",
                 labels: []
-              },
-              {
-                id: 1003,
-                title: "card 2",
-                description: "card 2 description",
-                labels: []
-              },
+              }
+            ]
+          },
+          {
+            id: 1003,
+            name: "In Progress",
+            cards: [
               {
                 id: 1004,
-                title: "card 3",
-                description: "card 3 description",
-                labels: []
+                title: "card 4",
+                description: "card 4 description"
               }
             ]
           },
           {
             id: 1005,
-            name: "in progress",
+            name: "Done",
             cards: [
               {
                 id: 1006,
-                title: "card 4",
-                description: "card 4 description"
-              },
-              {
-                id: 1007,
-                title: "card 5",
-                description: "card 5 description"
-              },
-              {
-                id: 1008,
-                title: "card 6",
-                description: "card 6 description"
-              }
-            ]
-          },
-          {
-            id: 1009,
-            name: "done",
-            cards: [
-              {
-                id: 1010,
                 title: "card 7",
                 description: "card 7 description"
-              },
-              {
-                id: 1011,
-                title: "card 8",
-                description: "card 8 description"
-              },
-              {
-                id: 1012,
-                title: "card 9",
-                description: "card 9 description"
               }
             ]
           }
@@ -87,7 +58,13 @@ class App extends Component {
   }
 
 
-  /// Event Handlers
+  /// HANDLER METHODS
+  /**
+   * 
+   * 
+   * 
+   * 
+   */
   newColumnHandler = () => {
     const newId = this.getNewId();
     const boards = this.state.boards.slice();
@@ -98,17 +75,32 @@ class App extends Component {
   newCardHandler = (index) => {
     const newId = this.getNewId();
     const boards = this.state.boards.slice();
-    boards[this.state.activeBoardIndex].columns[index].cards.push(this.createNewCardStructure(newId));
+    boards[this.state.activeBoardIndex].columns[index].cards.push(this.createNewCardStructure(newId, null, null));
     this.setState({ boards: boards, idIterator: newId });
 
   };
 
-  newCardGenericHandler = () => {
-    // Generic card addition
-  }
+  modelDisplayHandler = () => {
+    this.setState({ displayModel: !this.state.displayModel });
+  };
+
+  saveCardHandler = (title, description, columnId) => {
+    const newId = this.getNewId();
+    columnId = Number(columnId);
+    if (columnId === null) {
+      return;
+    }
+    const boards = this.state.boards.slice();
+    const columns = boards[this.state.activeBoardIndex].columns;
+    const index = columns.findIndex(column => {
+      return column.id === columnId;
+    });
+    boards[this.state.activeBoardIndex].columns[index].cards.push(this.createNewCardStructure(newId, title, description));
+    this.setState({ boards: boards, idIterator: newId, displayModel: false });
+
+  };
 
   deleteCardHandler = (index, id) => {
-    console.log(index, id);
     const boards = this.state.boards.slice();
     let cards = boards[this.state.activeBoardIndex].columns[index].cards.slice();
     cards = cards.filter(c => {
@@ -119,7 +111,6 @@ class App extends Component {
   };
 
   deleteColumnHandler = (id) => {
-    console.log(id);
     const boards = this.state.boards.slice();
     let columns = boards[this.state.activeBoardIndex].columns;
     columns = columns.filter(c => {
@@ -129,7 +120,15 @@ class App extends Component {
     this.setState({ boards: boards });
   };
 
-  /// Hepler Methods
+  /// HELPER METHODS
+  /**
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   */
   createNewColumnStructure = (id, name) => {
     const newColumn = {
       id: id,
@@ -139,11 +138,11 @@ class App extends Component {
     return newColumn;
   };
 
-  createNewCardStructure = (id) => {
+  createNewCardStructure = (id, title, description) => {
     const newCard = {
       id: id,
-      title: "title",
-      description: "description",
+      title: title ? title : "title",
+      description: description ? description : "description",
       labels: []
     };
     return newCard;
@@ -159,7 +158,14 @@ class App extends Component {
     return (
       <div className={classes.App}>
         <Toolbar
-          newColumnClicked={this.newColumnHandler} />
+          newColumnClicked={this.newColumnHandler}
+          newCardGenericClicked={this.modelDisplayHandler} />
+        <Modal display={this.state.displayModel}>
+          <Cardform
+            columns={this.state.boards[this.state.activeBoardIndex].columns}
+            cancelClicked={this.modelDisplayHandler}
+            saveCardClicked={this.saveCardHandler} />
+        </Modal>
         <Board
           board={this.state.boards[this.state.activeBoardIndex]}
           columns={this.state.boards[this.state.activeBoardIndex].columns}
