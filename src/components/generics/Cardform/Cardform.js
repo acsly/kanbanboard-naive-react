@@ -21,13 +21,17 @@ const cardform = (props) => {
 
     let form = (
         <div className={classes.Cardform}>
-            <button onClick={() => props.cancelClicked("Cancel")}>cancel</button>
-            <input id="card-title" placeholder="Title" onChange={(event) => onChangeHandler(event)} autoFocus></input>
-            <input id="card-description" placeholder="Description" onChange={(event) => onChangeHandler(event)} ></input>
-            <select id="column-selector" onChange={(event) => onChangeHandler(event)} >
-                {options}
-            </select>
-            <button onClick={() => props.saveClicked(title, description, selectedOption)}>Save</button>
+            <button className={classes.cancelBtn} onClick={() => props.cancelClicked("Cancel")}>X</button>
+            <div>
+                <input id="card-title" className={classes.titleInput} placeholder="Title" onChange={(event) => onChangeHandler(event)} autoFocus></input>
+                <input id="card-description" className={classes.descInput} placeholder="Description" onChange={(event) => onChangeHandler(event)} ></input>
+                <div className={classes.center}>
+                    <select id="column-selector" className={classes.columnSelector} onChange={(event) => onChangeHandler(event)} >
+                        {options}
+                    </select>
+                    <button onClick={() => props.saveClicked(title, description, selectedOption)}>Save</button>
+                </div>
+            </div>
         </div>
     );
 

@@ -1,1 +1,22 @@
-.Columnform {}
+.Columnform {
+    padding: 20px;
+}
+
+.cancelBtn {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.nameInput {
+    display: block;
+    width: 70%;
+    margin-bottom: 10px;
+    border: none;
+    font-weight: 700;
+    font-size: 1.5em;
+}
+
+.center {
+    text-align: center;
+}

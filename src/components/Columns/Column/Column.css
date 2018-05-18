@@ -1,12 +1,21 @@
 .Column {
     flex-grow: 1;
+    flex-basis: 0;
     border: 2px solid black;
 }
 
-header h4 {
-    overflow: hidden;
+.Column h4 {
+    word-wrap: break-word;
+    word-break: break-word;
+    text-align: center;
 }
 
-header button {
-    align-items: flex-end;
+.deleteBtn {
+    float: right;
+    margin: 5px 5px 0 0;
+}
+
+.newBtn {
+    float: left;
+    margin: 5px 0 0 5px;
 }

@@ -9,9 +9,11 @@ const columnform = (props) => {
 
     let form = (
         <div className={classes.Columnform}>
-            <button onClick={() => props.cancelClicked("Cancel")}>cancel</button>
-            <input placeholder="Name" onChange={(event) => onChangeHandler(event)} autoFocus></input>
-            <button onClick={() => props.saveClicked(name)}>Save</button>
+            <button className={classes.cancelBtn} onClick={() => props.cancelClicked("Cancel")}>X</button>
+            <input className={classes.nameInput} placeholder="Name" onChange={(event) => onChangeHandler(event)} autoFocus></input>
+            <div className={classes.center}>
+                <button onClick={() => props.saveClicked(name)}>Save</button>
+            </div>
         </div>
     );
 
