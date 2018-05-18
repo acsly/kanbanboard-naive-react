@@ -19,17 +19,22 @@ const cardform = (props) => {
             }
         };
 
-    return (
+    let form = (
         <div className={classes.Cardform}>
-            <button onClick={props.cancelClicked}>cancel</button>
+            <button onClick={() => props.cancelClicked("Cancel")}>cancel</button>
             <input id="card-title" placeholder="Title" onChange={(event) => onChangeHandler(event)}></input>
             <input id="card-description" placeholder="Description" onChange={(event) => onChangeHandler(event)} ></input>
             <select id="column-selector" onChange={(event) => onChangeHandler(event)} >
                 {options}
             </select>
-            <button onClick={() => props.saveCardClicked(title, description, selectedOption)}>Save</button>
+            <button onClick={() => props.saveClicked(title, description, selectedOption)}>Save</button>
         </div>
     );
+
+    if (props.display) {
+        return form;
+    }
+    return null;
 };
 
 export default cardform;

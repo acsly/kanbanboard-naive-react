@@ -3,8 +3,9 @@ import classes from './App.css';
 
 import Toolbar from '../components/Toolbar/Toolbar';
 import Board from '../components/Board/Board';
-import Modal from '../components/Modal/Modal';
-import Cardform from '../components/Cardform/Cardform';
+import Modal from '../components/generics/Modal/Modal';
+import Cardform from '../components/generics/Cardform/Cardform';
+import Columnform from '../components/generics/Columnform/Columnform';
 
 class App extends Component {
 
@@ -13,6 +14,8 @@ class App extends Component {
     idIterator: 1006,
     activeBoardIndex: 0,
     displayModel: false,
+    displayCardform: false,
+    displayColumnform: false,
     boards: [
       {
         id: 1000,
@@ -65,12 +68,39 @@ class App extends Component {
    * 
    * 
    */
-  newColumnHandler = () => {
+
+
+  /// COLUMN RELATED HANDLER METHODS
+  /**
+   * 
+   * 
+   * 
+   * 
+   */
+  newColumnHandler = (name) => {
     const newId = this.getNewId();
     const boards = this.state.boards.slice();
-    boards[this.state.activeBoardIndex].columns.push(this.createNewColumnStructure(newId));
-    this.setState({ boards: boards, idIterator: newId });
+    boards[this.state.activeBoardIndex].columns.push(this.createNewColumnStructure(newId, name));
+    this.setState({ boards: boards, idIterator: newId, displayModel: false, displayColumnform: false });
   };
+
+  deleteColumnHandler = (id) => {
+    const boards = this.state.boards.slice();
+    let columns = boards[this.state.activeBoardIndex].columns;
+    columns = columns.filter(c => {
+      return c.id !== id;
+    });
+    boards[this.state.activeBoardIndex].columns = columns;
+    this.setState({ boards: boards });
+  };
+
+  /// CARD RELATED HANDLER METHODS
+  /**
+   * 
+   * 
+   * 
+   * 
+   */
 
   newCardHandler = (index) => {
     const newId = this.getNewId();
@@ -80,9 +110,6 @@ class App extends Component {
 
   };
 
-  modelDisplayHandler = () => {
-    this.setState({ displayModel: !this.state.displayModel });
-  };
 
   saveCardHandler = (title, description, columnId) => {
     const newId = this.getNewId();
@@ -96,7 +123,7 @@ class App extends Component {
       return column.id === columnId;
     });
     boards[this.state.activeBoardIndex].columns[index].cards.push(this.createNewCardStructure(newId, title, description));
-    this.setState({ boards: boards, idIterator: newId, displayModel: false });
+    this.setState({ boards: boards, idIterator: newId, displayModel: false, displayCardform: false });
 
   };
 
@@ -107,16 +134,6 @@ class App extends Component {
       return c.id !== id;
     });
     boards[this.state.activeBoardIndex].columns[index].cards = cards;
-    this.setState({ boards: boards });
-  };
-
-  deleteColumnHandler = (id) => {
-    const boards = this.state.boards.slice();
-    let columns = boards[this.state.activeBoardIndex].columns;
-    columns = columns.filter(c => {
-      return c.id !== id;
-    });
-    boards[this.state.activeBoardIndex].columns = columns;
     this.setState({ boards: boards });
   };
 
@@ -132,7 +149,7 @@ class App extends Component {
   createNewColumnStructure = (id, name) => {
     const newColumn = {
       id: id,
-      name: "New Column",
+      name: name ? name : "New Column",
       cards: []
     };
     return newColumn;
@@ -152,19 +169,34 @@ class App extends Component {
 
   getActiveBoard = () => (this.state.boards[this.state.activeBoardIndex]);
 
+  modelDisplayHandler = (type) => {
+    if (type === "Card") {
+      this.setState({ displayModel: true, displayCardform: true });
+    } else if (type === "Column") {
+      this.setState({ displayModel: true, displayColumnform: true });
+    } else if (type === "Cancel") {
+      this.setState({ displayModel: false, displayCardform: false, displayColumnform: false });
+    }
+  };
+
 
   /// React Render
   render() {
     return (
       <div className={classes.App}>
         <Toolbar
-          newColumnClicked={this.newColumnHandler}
+          newColumnGenericClicked={this.modelDisplayHandler}
           newCardGenericClicked={this.modelDisplayHandler} />
         <Modal display={this.state.displayModel}>
           <Cardform
+            display={this.state.displayCardform}
             columns={this.state.boards[this.state.activeBoardIndex].columns}
             cancelClicked={this.modelDisplayHandler}
-            saveCardClicked={this.saveCardHandler} />
+            saveClicked={this.saveCardHandler} />
+          <Columnform
+            display={this.state.displayColumnform}
+            cancelClicked={this.modelDisplayHandler}
+            saveClicked={this.newColumnHandler} />
         </Modal>
         <Board
           board={this.state.boards[this.state.activeBoardIndex]}
