@@ -103,6 +103,10 @@ class App extends Component {
 
   };
 
+  newCardGenericHandler = () => {
+    // Generic card addition
+  }
+
   deleteCardHandler = (index, id) => {
     console.log(index, id);
     const boards = this.state.boards.slice();
@@ -161,7 +165,7 @@ class App extends Component {
           columns={this.state.boards[this.state.activeBoardIndex].columns}
           newCardClicked={this.newCardHandler}
           deleteCardClicked={this.deleteCardHandler}
-          deleteColumnClicked={this.deleteColumnHandler}/>
+          deleteColumnClicked={this.deleteColumnHandler} />
       </div>
     );
   }
