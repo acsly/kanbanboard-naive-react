@@ -8,7 +8,7 @@ const modal = (props) => {
                 {props.children}
             </div>
         );
-    }else {
+    } else {
         return null;
     }
 

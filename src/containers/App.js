@@ -6,6 +6,7 @@ import Board from '../components/Board/Board';
 import Modal from '../components/generics/Modal/Modal';
 import Cardform from '../components/generics/Cardform/Cardform';
 import Columnform from '../components/generics/Columnform/Columnform';
+import Backdrop from '../components/generics/Backdrop/Backdrop';
 
 class App extends Component {
 
@@ -184,6 +185,7 @@ class App extends Component {
   render() {
     return (
       <div className={classes.App}>
+        <Backdrop display={this.state.displayModel} />
         <Toolbar
           newColumnGenericClicked={this.modelDisplayHandler}
           newCardGenericClicked={this.modelDisplayHandler} />

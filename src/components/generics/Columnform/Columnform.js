@@ -10,7 +10,7 @@ const columnform = (props) => {
     let form = (
         <div className={classes.Columnform}>
             <button onClick={() => props.cancelClicked("Cancel")}>cancel</button>
-            <input placeholder="Name" onChange={(event) => onChangeHandler(event)}></input>
+            <input placeholder="Name" onChange={(event) => onChangeHandler(event)} autoFocus></input>
             <button onClick={() => props.saveClicked(name)}>Save</button>
         </div>
     );
