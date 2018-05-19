@@ -131,22 +131,24 @@ class App extends Component {
     }
     // if a new card is being created
     else {
-      // if new card button on the toolbar is pressed
-      if (columnId === null) {
+      // if new card button on a column is pressed
+      const cardToEdit = Object.assign({}, this.state.cardToEdit);
+      console.log(cardToEdit);
+      if (cardToEdit.columnIndex != null) {
+        const newId = this.getNewId();
+        const boards = this.state.boards.slice();
+        const index = this.state.cardToEdit.columnIndex;
+        boards[this.state.activeBoardIndex].columns[index].cards.push(this.createNewCardStructure(newId, title, description));
+        this.setState({ boards: boards, idIterator: newId, displayModel: false, displayCardform: false, cardToEdit: null });
+      }
+      // if the new card button on the toolbar is pressed
+      else {
         const newId = this.getNewId();
         const boards = this.state.boards.slice();
         const columns = boards[this.state.activeBoardIndex].columns;
         const index = columns.findIndex(column => {
           return column.id === Number(columnId);
         });
-        boards[this.state.activeBoardIndex].columns[index].cards.push(this.createNewCardStructure(newId, title, description));
-        this.setState({ boards: boards, idIterator: newId, displayModel: false, displayCardform: false, cardToEdit: null });
-      }
-      // if the new card button on a column is pressed
-      else {
-        const newId = this.getNewId();
-        const boards = this.state.boards.slice();
-        const index = this.state.cardToEdit.columnIndex;
         boards[this.state.activeBoardIndex].columns[index].cards.push(this.createNewCardStructure(newId, title, description));
         this.setState({ boards: boards, idIterator: newId, displayModel: false, displayCardform: false, cardToEdit: null });
       }
