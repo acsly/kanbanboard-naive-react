@@ -12,7 +12,7 @@ class App extends Component {
 
   /// Application State
   state = {
-    idIterator: 1006,
+    idIterator: 1010,
     activeBoardIndex: 0,
     displayModel: false,
     displayCardform: false,
@@ -31,7 +31,18 @@ class App extends Component {
                 id: 1002,
                 title: "card 1",
                 description: "card 1 description",
-                labels: []
+                labels: [
+                  {
+                    id: 1007,
+                    name: "label1",
+                    color: "#FFF"
+                  },
+                  {
+                    id: 1010,
+                    name: "compulsory",
+                    color: "#FFF"
+                  }
+                ]
               }
             ]
           },
@@ -42,7 +53,14 @@ class App extends Component {
               {
                 id: 1004,
                 title: "card 4",
-                description: "card 4 description"
+                description: "card 4 description",
+                labels: [
+                  {
+                    id: 1008,
+                    name: "label2",
+                    color: "#FFF"
+                  }
+                ]
               }
             ]
           },
@@ -53,7 +71,14 @@ class App extends Component {
               {
                 id: 1006,
                 title: "card 7",
-                description: "card 7 description"
+                description: "card 7 description",
+                labels: [
+                  {
+                    id: 1009,
+                    name: "label3",
+                    color: "#FFF"
+                  }
+                ]
               }
             ]
           }
@@ -107,13 +132,7 @@ class App extends Component {
   newCardHandler = (index) => {
     this.setState({ cardToEdit: { card: null, columnIndex: index } });
     this.modelDisplayHandler("Card");
-    /*const newId = this.getNewId();
-    const boards = this.state.boards.slice();
-    boards[this.state.activeBoardIndex].columns[index].cards.push(this.createNewCardStructure(newId, null, null));
-    this.setState({ boards: boards, idIterator: newId });*/
-
   };
-
 
   saveCardHandler = (id, title, description, columnId) => {
     //if the card is being edited
@@ -177,6 +196,23 @@ class App extends Component {
     this.setState({ boards: boards });
   };
 
+  /// CARD RELATED HANDLER METHODS
+  /**
+   * 
+   * 
+   * 
+   * 
+   */
+
+  addNewLabelHandler = (name, color) => {
+    const newId = this.getNewId();
+    const card = Object.assign({}, this.state.cardToEdit.card);
+    const index = this.state.cardToEdit.columnIndex;
+    card.labels.push(this.createNewLabelStructure(newId, name, color));
+    this.setState({ cardToEdit: { card: card, columnIndex: index }, idIterator: newId });
+  };
+
+
   /// HELPER METHODS
   /**
    * 
@@ -203,6 +239,15 @@ class App extends Component {
       labels: []
     };
     return newCard;
+  };
+
+  createNewLabelStructure = (id, name, color) => {
+    const label = {
+      id: id,
+      name: name ? name : "myLabel",
+      color: color ? color : "#FFF"
+    };
+    return label;
   };
 
   getNewId = () => (this.state.idIterator + 1);
@@ -236,7 +281,8 @@ class App extends Component {
             columns={this.state.boards[this.state.activeBoardIndex].columns}
             cancelClicked={this.modelDisplayHandler}
             saveClicked={this.saveCardHandler}
-            cardToEdit={this.state.cardToEdit} />
+            cardToEdit={this.state.cardToEdit}
+            addLabelClicked={this.addNewLabelHandler} />
           <Columnform
             display={this.state.displayColumnform}
             cancelClicked={this.modelDisplayHandler}

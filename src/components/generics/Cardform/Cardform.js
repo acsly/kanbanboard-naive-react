@@ -1,6 +1,8 @@
 import React from 'react';
 import classes from './Cardform.css';
 
+import Labels from '../../Labels/Labels';
+
 const cardform = (props) => {
     let options = props.columns;
     options = options.map(option => {
@@ -9,18 +11,21 @@ const cardform = (props) => {
     let selectedOption,
         id,
         title,
-        description;
+        description,
+        labels,
+        labelName = "",
+        labelColor = "#FFF";
     if (props.columns.length > 0) {
         selectedOption = props.columns[0].id
     } else {
         selectedOption = 0;
     }
     if (props.cardToEdit !== undefined && props.cardToEdit !== null) {
-        console.log(props.cardToEdit);
         if (props.cardToEdit.card !== undefined && props.cardToEdit.card !== null) {
             id = props.cardToEdit.card.id;
             title = props.cardToEdit.card.title;
             description = props.cardToEdit.card.description;
+            labels = props.cardToEdit.card.labels;
             selectedOption = props.cardToEdit.columnIndex;
         } else {
             id = null;
@@ -36,8 +41,14 @@ const cardform = (props) => {
             description = event.target.value;
         } else if (event.target.id === "column-selector") {
             selectedOption = event.target.options[event.target.options.selectedIndex].getAttribute("optionid");
+        } else if (event.target.id === "labels-name") {
+            labelName = event.target.value;
+        } else if (event.target.id === "labels-color") {
+            labelColor = event.target.value;
+            console.log(labelColor);
         }
     };
+
     let form = (
         <div className={classes.Cardform}>
             <button className={classes.cancelBtn} onClick={() => props.cancelClicked("Cancel")}>X</button>
@@ -59,6 +70,21 @@ const cardform = (props) => {
                     onChange={(event) => onChangeHandler(event)}
                     defaultValue={description} >
                 </input>
+                <input
+                    id="labels-color"
+                    type="color"
+                    onChange={(event) => onChangeHandler(event)}
+                    defaultValue="#ffffff" >
+                </input>
+                <input
+                    id="labels-name"
+                    type="text"
+                    className={classes.labelInput}
+                    placeholder="label"
+                    onChange={(event) => onChangeHandler(event)} >
+                </input>
+                <button onClick={() => props.addLabelClicked(labelName, labelColor)}>+</button>
+                <Labels labels={labels} />
                 <div className={classes.center}>
                     <select id="column-selector" className={classes.columnSelector} onChange={(event) => onChangeHandler(event)} style={props.cardToEdit ? { "display": "none" } : {}}>
                         {options}
@@ -66,7 +92,7 @@ const cardform = (props) => {
                     <button onClick={() => props.saveClicked(id, title, description, selectedOption)}>Save</button>
                 </div>
             </div>
-        </div>
+        </div >
     );
 
     if (props.display) {

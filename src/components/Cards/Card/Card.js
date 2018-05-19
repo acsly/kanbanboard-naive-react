@@ -1,6 +1,8 @@
 import React from 'react';
 import classes from './Card.css';
 
+import Labels from '../../Labels/Labels';
+
 const card = (props) => (
     <div className={classes.Card}>
         <button className={classes.editBtn} onClick={(index) => props.editCardClicked(props.id, index)}>Edit</button>
@@ -8,7 +10,7 @@ const card = (props) => (
         <div className={classes.cardContent}>
             <p>{props.title}</p>
             <p>{props.description}</p>
-            <p>{props.id}</p>
+            <Labels labels={props.labels} />
         </div>
     </div>
 );

@@ -7,6 +7,7 @@ const cards = (props) => props.cards.map((card, index) => {
         id={card.id}
         title={card.title}
         description={card.description}
+        labels={card.labels}
         key={card.id}
         deleteCardClicked={props.deleteCardClicked}
         editCardClicked={props.editCardClicked}/>
