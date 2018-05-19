@@ -16,18 +16,22 @@ const cardform = (props) => {
         selectedOption = 0;
     }
     if (props.cardToEdit !== undefined && props.cardToEdit !== null) {
-        id = props.cardToEdit.card.id;
-        title = props.cardToEdit.card.title;
-        description = props.cardToEdit.card.description;
-        selectedOption = props.cardToEdit.columnIndex;
+        console.log(props.cardToEdit);
+        if (props.cardToEdit.card !== undefined && props.cardToEdit.card !== null) {
+            id = props.cardToEdit.card.id;
+            title = props.cardToEdit.card.title;
+            description = props.cardToEdit.card.description;
+            selectedOption = props.cardToEdit.columnIndex;
+        } else {
+            id = null;
+            selectedOption = props.cardToEdit.columnIndex;
+        }
     } else {
         id = null;
     }
     const onChangeHandler = (event) => {
-        console.log(event);
         if (event.target.id === "card-title") {
             title = event.target.value;
-            console.log(title);
         } else if (event.target.id === "card-description") {
             description = event.target.value;
         } else if (event.target.id === "column-selector") {

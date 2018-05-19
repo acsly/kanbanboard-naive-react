@@ -7,7 +7,7 @@ const toolbar = (props) => (
             <button className={classes.selectBoardBtn}>Menu</button>
             <button className={classes.addNewColumnBtn} onClick={() => props.newColumnGenericClicked("Column")} >Add New Column</button>
         </div>
-        <h2 className={classes.logo}>Kanban Board</h2>
+        <h2 className={classes.logo}>{props.boardName}</h2>
         <div className={classes.toolbarRight}>
             <button onClick={() => props.newCardGenericClicked("Card")} disabled={props.newCardDisabled}>Add New Card</button>
         </div>
