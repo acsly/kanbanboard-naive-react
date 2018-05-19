@@ -12,3 +12,10 @@ body {
 input, select {
   outline: none;
 }
+
+button {
+  background-color: #C47335;
+  border-style: none;
+  border-radius: 5px;
+  color: #FFFCFF;
+}

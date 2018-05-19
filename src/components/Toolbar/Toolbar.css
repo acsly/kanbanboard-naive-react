@@ -3,14 +3,13 @@
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
-    height: 13%;
-    min-height: 70px;
-    background-color: gray;
+    align-items: center;
+    height: 7%;
+    background-color: #46494C;
 }
 
 .logo {
-    width: 100px;
-    height: 50px;
+    color: #DCDCDD;
     display: inline-block;
 }
 
@@ -21,10 +20,11 @@
 .toolbarRight {
     min-width: 30%;
     text-align: right;
+    padding: 5px;
 }
 
 .toolbarLeft {
     min-width: 30%;
     text-align: left;
-    
+    padding: 5px;
 }

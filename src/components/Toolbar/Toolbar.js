@@ -8,7 +8,7 @@ const toolbar = (props) => (
             <button className={classes.addNewColumnButton} onClick={() => props.newColumnGenericClicked("Column")} >Add New Column</button>
         </div>
 
-        <img className={classes.logo} alt="logo of the project" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTA2vkyldAFInyfe8TlfWZvwisxi_7oTRfj5eex8GpbX0_U4viCgQ" />
+        <h2 className={classes.logo}>Kanban Board</h2>
 
         <div className={classes.toolbarRight}>
             <button onClick={() => props.newCardGenericClicked("Card")}>Add New Card</button>

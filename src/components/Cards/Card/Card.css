@@ -1,12 +1,16 @@
 .Card {
-    border: 2px solid black;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #385F71;
+    border-radius: 5px;
+    background-color: #FFFCFF;
     margin: 5px;
 }
 
 .Card p {
     word-wrap: break-word;
     word-break: break-word;
-    margin: 10px 5px; 
+    margin: 10px 5px;
 }
 
 .deleteBtn {
