@@ -19,3 +19,10 @@ button {
   border-radius: 5px;
   color: #FFFCFF;
 }
+
+button:disabled {
+  background-color: gray;
+  border-style: none;
+  border-radius: 5px;
+  color: #FFFCFF;
+}

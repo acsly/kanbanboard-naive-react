@@ -8,6 +8,7 @@ const board = (props) => (
         <Columns
             columns={props.columns}
             newCardClicked={props.newCardClicked}
+            editCardClicked={props.editCardClicked}
             deleteCardClicked={props.deleteCardClicked}
             deleteColumnClicked={props.deleteColumnClicked}/>
     </div>

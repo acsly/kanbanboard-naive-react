@@ -10,8 +10,9 @@ const columns = (props) => props.columns.map((column, index) => {
         key={column.id}
         cards={column.cards}
         newCardClicked={() => props.newCardClicked(index)}
-        deleteCardClicked={props.deleteCardClicked.bind(this, index)} 
-        deleteColumnClicked={props.deleteColumnClicked}/>
+        editCardClicked={props.editCardClicked.bind(this, index)}
+        deleteCardClicked={props.deleteCardClicked.bind(this, index)}
+        deleteColumnClicked={props.deleteColumnClicked} />
 });
 
 

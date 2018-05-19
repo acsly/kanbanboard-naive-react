@@ -17,6 +17,7 @@ class App extends Component {
     displayModel: false,
     displayCardform: false,
     displayColumnform: false,
+    cardToEdit: null,
     boards: [
       {
         id: 1000,
@@ -112,20 +113,44 @@ class App extends Component {
   };
 
 
-  saveCardHandler = (title, description, columnId) => {
-    const newId = this.getNewId();
-    columnId = Number(columnId);
-    if (columnId === null) {
-      return;
-    }
-    const boards = this.state.boards.slice();
-    const columns = boards[this.state.activeBoardIndex].columns;
-    const index = columns.findIndex(column => {
-      return column.id === columnId;
-    });
-    boards[this.state.activeBoardIndex].columns[index].cards.push(this.createNewCardStructure(newId, title, description));
-    this.setState({ boards: boards, idIterator: newId, displayModel: false, displayCardform: false });
+  saveCardHandler = (id, title, description, columnId) => {
+    //if the card is being edited there is an id 
+    if (id !== null) {
+      const boards = this.state.boards.slice();
+      const columns = boards[this.state.activeBoardIndex].columns;
+      const index = this.state.cardToEdit.columnIndex;
+      console.log(index);
+      let cardIndex = boards[this.state.activeBoardIndex].columns[index].cards.findIndex((c) => {
+        return c.id === id;
+      });
+      //Set new values for the card edited
+      boards[this.state.activeBoardIndex].columns[index].cards[cardIndex].title = title;
+      boards[this.state.activeBoardIndex].columns[index].cards[cardIndex].description = description;
 
+      this.setState({ boards: boards, displayModel: false, displayCardform: false, cardToEdit: null });
+    }
+    // if a new card is being created
+    else {
+      const newId = this.getNewId();
+      const boards = this.state.boards.slice();
+      const columns = boards[this.state.activeBoardIndex].columns;
+      const index = columns.findIndex(column => {
+        return column.id === Number(columnId);
+      });
+      boards[this.state.activeBoardIndex].columns[index].cards.push(this.createNewCardStructure(newId, title, description));
+      this.setState({ boards: boards, idIterator: newId, displayModel: false, displayCardform: false, cardToEdit: null });
+    }
+
+  };
+
+  editCardHandler = (index, id) => {
+    const boards = this.state.boards.slice();
+    let card = boards[this.state.activeBoardIndex].columns[index].cards.filter((c) => {
+      return c.id === id;
+    });
+    card = card[0];
+    this.setState({ cardToEdit: { card: card, columnIndex: index } });
+    this.modelDisplayHandler("Card");
   };
 
   deleteCardHandler = (index, id) => {
@@ -176,7 +201,7 @@ class App extends Component {
     } else if (type === "Column") {
       this.setState({ displayModel: true, displayColumnform: true });
     } else if (type === "Cancel") {
-      this.setState({ displayModel: false, displayCardform: false, displayColumnform: false });
+      this.setState({ displayModel: false, displayCardform: false, displayColumnform: false, cardToEdit: null });
     }
   };
 
@@ -188,13 +213,15 @@ class App extends Component {
         <Backdrop display={this.state.displayModel} />
         <Toolbar
           newColumnGenericClicked={this.modelDisplayHandler}
-          newCardGenericClicked={this.modelDisplayHandler} />
+          newCardGenericClicked={this.modelDisplayHandler}
+          newCardDisabled={this.state.boards[this.state.activeBoardIndex].columns.length <= 0} />
         <Modal display={this.state.displayModel}>
           <Cardform
             display={this.state.displayCardform}
             columns={this.state.boards[this.state.activeBoardIndex].columns}
             cancelClicked={this.modelDisplayHandler}
-            saveClicked={this.saveCardHandler} />
+            saveClicked={this.saveCardHandler}
+            cardToEdit={this.state.cardToEdit} />
           <Columnform
             display={this.state.displayColumnform}
             cancelClicked={this.modelDisplayHandler}
@@ -204,6 +231,7 @@ class App extends Component {
           board={this.state.boards[this.state.activeBoardIndex]}
           columns={this.state.boards[this.state.activeBoardIndex].columns}
           newCardClicked={this.newCardHandler}
+          editCardClicked={this.editCardHandler}
           deleteCardClicked={this.deleteCardHandler}
           deleteColumnClicked={this.deleteColumnHandler} />
       </div>

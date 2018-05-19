@@ -13,8 +13,12 @@
     display: inline-block;
 }
 
-.selectBoardButton {
+.selectBoardBtn {
     display: inline-block;
+}
+
+.addNewColumnBtn {
+    margin-left: 5px;
 }
 
 .toolbarRight {
