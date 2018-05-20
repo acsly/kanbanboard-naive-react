@@ -91,6 +91,25 @@ class App extends Component {
     ]
   }
 
+  constructor(props) {
+    super(props);
+
+    let loadData = localStorage.getItem("boardData");
+    if (loadData !== "undefined" && loadData !== "null") {
+      loadData = JSON.parse(loadData);
+      this.state = loadData;
+    }
+    this.loadCheck = this.loadCheck.bind(this);
+    window.onbeforeunload = this.loadCheck;
+  }
+
+  loadCheck(event) {
+    let saveData = this.state;
+    saveData = JSON.stringify(saveData);
+    console.log(this.state, saveData);
+    localStorage.setItem("boardData", saveData);
+  }
+
 
   /// HANDLER METHODS
   /**
