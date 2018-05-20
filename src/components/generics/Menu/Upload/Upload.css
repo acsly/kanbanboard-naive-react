@@ -1,0 +1,20 @@
+.Upload {}
+
+.Upload input {
+    display: block;
+    margin: auto;
+}
+
+.cancelBtn {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.uploadContainer {
+    text-align: center; 
+}
+
+.loadBtn {
+    margin-top: 10px;
+}

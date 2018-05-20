@@ -5,6 +5,7 @@ import Toolbar from '../components/Toolbar/Toolbar';
 import Board from '../components/Board/Board';
 import Modal from '../components/generics/Modal/Modal';
 import Menu from '../components/generics/Menu/Menu';
+import Upload from '../components/generics/Menu/Upload/Upload';
 import Cardform from '../components/generics/Cardform/Cardform';
 import Columnform from '../components/generics/Columnform/Columnform';
 import Backdrop from '../components/generics/Backdrop/Backdrop';
@@ -17,6 +18,7 @@ class App extends Component {
     activeBoardIndex: 0,
     displayModel: false,
     displayMenu: false,
+    displayUpload: false,
     displayCardform: false,
     displayColumnform: false,
     cardToEdit: null,
@@ -284,10 +286,22 @@ class App extends Component {
       this.setState({ displayModel: true, displayColumnform: true });
     } else if (type === "Menu") {
       this.setState({ displayModel: true, displayMenu: true });
+    } else if (type === "Upload") {
+      this.setState({ displayModel: true, displayMenu: false, displayUpload: true });
     } else if (type === "Cancel") {
-      this.setState({ displayModel: false, displayMenu: false, displayCardform: false, displayColumnform: false, cardToEdit: null });
+      this.setState({ displayModel: false, displayMenu: false, displayUpload: false, displayCardform: false, displayColumnform: false, cardToEdit: null });
     }
   };
+
+  /// IMPORT AND EXPORT JSON METHODS
+  /**
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   */
 
   exportState = () => {
     let dataStr = JSON.stringify(this.state.boards);
@@ -297,6 +311,12 @@ class App extends Component {
     downloadLink.setAttribute('href', dataUri);
     downloadLink.setAttribute('download', fileName);
     downloadLink.click();
+  };
+
+  loadHandler = (content) => {
+    let boardsData = JSON.parse(content);
+    this.setState({ boards: boardsData });
+    this.modelDisplayHandler("Cancel");
   };
 
   /// React Render
@@ -314,7 +334,12 @@ class App extends Component {
           <Menu
             display={this.state.displayMenu}
             downloadClicked={this.exportState}
+            uploadClicked={this.modelDisplayHandler}
             cancelClicked={this.modelDisplayHandler} />
+          <Upload
+            display={this.state.displayUpload}
+            cancelClicked={this.modelDisplayHandler}
+            loadClicked={this.loadHandler} />
           <Cardform
             display={this.state.displayCardform}
             columns={this.state.boards[this.state.activeBoardIndex].columns}

@@ -10,7 +10,7 @@ const menu = (props) => {
                     <button className={classes.downloadBtn} onClick={props.downloadClicked}>Download Board Data</button>
                 </div>
                 <div>
-                    <button className={classes.loadBtn}>Load Board Data From File</button>
+                    <button className={classes.loadBtn} onClick={() => props.uploadClicked("Upload")}>Load Board Data From File</button>
                 </div>
             </div>
         );
