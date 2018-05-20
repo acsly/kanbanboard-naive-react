@@ -33,61 +33,17 @@ class App extends Component {
           {
             id: 1001,
             name: "To Do",
-            cards: [
-              {
-                id: 1002,
-                title: "card 1",
-                description: "card 1 description",
-                labels: [
-                  {
-                    id: 1007,
-                    name: "label1",
-                    color: "#FFF"
-                  },
-                  {
-                    id: 1010,
-                    name: "compulsory",
-                    color: "#FFF"
-                  }
-                ]
-              }
-            ]
+            cards: []
           },
           {
             id: 1003,
             name: "In Progress",
-            cards: [
-              {
-                id: 1004,
-                title: "card 4",
-                description: "card 4 description",
-                labels: [
-                  {
-                    id: 1008,
-                    name: "label2",
-                    color: "#FFF"
-                  }
-                ]
-              }
-            ]
+            cards: []
           },
           {
             id: 1005,
             name: "Done",
-            cards: [
-              {
-                id: 1006,
-                title: "card 7",
-                description: "card 7 description",
-                labels: [
-                  {
-                    id: 1009,
-                    name: "label3",
-                    color: "#FFF"
-                  }
-                ]
-              }
-            ]
+            cards: []
           }
         ]
       }
