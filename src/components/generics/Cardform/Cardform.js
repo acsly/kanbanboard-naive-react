@@ -45,7 +45,6 @@ const cardform = (props) => {
             labelName = event.target.value;
         } else if (event.target.id === "labels-color") {
             labelColor = event.target.value;
-            console.log(labelColor);
         }
     };
 

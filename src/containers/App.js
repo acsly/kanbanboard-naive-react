@@ -153,7 +153,6 @@ class App extends Component {
     else {
       // if new card button on a column is pressed
       const cardToEdit = Object.assign({}, this.state.cardToEdit);
-      console.log(cardToEdit);
       if (cardToEdit.columnIndex != null) {
         const newId = this.getNewId();
         const boards = this.state.boards.slice();
@@ -214,26 +213,19 @@ class App extends Component {
   };
 
   removeLabelHandler = (columnIndex, cardIndex, id) => {
-    console.log(columnIndex, cardIndex, id);
     if (this.state.cardToEdit !== null) {
-      console.log("burdayım");
       const card = Object.assign({}, this.state.cardToEdit.card);
-      console.log(card);
       const index = this.state.cardToEdit.columnIndex;
       const labels = card.labels.filter(l => {
-        console.log(l.id, id);
         return l.id !== columnIndex; // Somehow, when called from cardform, id returns in the columnIndex variable, what is compared here is actually the id of the label aliased by columnIndex!!
       });
-      console.log(labels);
       card.labels = labels;
       this.setState({ cardToEdit: { card: card, columnIndex: index } });
     } else if (columnIndex !== undefined || cardIndex !== undefined) {
-      console.log("nerdesin");
       const boards = this.state.boards.slice();
       const labels = boards[this.state.activeBoardIndex].columns[columnIndex].cards[cardIndex].labels.filter(l => {
         return l.id !== id;
       });
-      console.log(labels);
       boards[this.state.activeBoardIndex].columns[columnIndex].cards[cardIndex].labels = labels;
       this.setState({ boards: boards });
     }
