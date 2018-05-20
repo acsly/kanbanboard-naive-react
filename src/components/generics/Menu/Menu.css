@@ -1,0 +1,13 @@
+.Menu {
+    text-align: center;
+}
+
+.cancelBtn {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.downloadBtn, .loadBtn {
+    margin: 10px;
+}

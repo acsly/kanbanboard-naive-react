@@ -4,6 +4,7 @@ import classes from './App.css';
 import Toolbar from '../components/Toolbar/Toolbar';
 import Board from '../components/Board/Board';
 import Modal from '../components/generics/Modal/Modal';
+import Menu from '../components/generics/Menu/Menu';
 import Cardform from '../components/generics/Cardform/Cardform';
 import Columnform from '../components/generics/Columnform/Columnform';
 import Backdrop from '../components/generics/Backdrop/Backdrop';
@@ -15,6 +16,7 @@ class App extends Component {
     idIterator: 1010,
     activeBoardIndex: 0,
     displayModel: false,
+    displayMenu: false,
     displayCardform: false,
     displayColumnform: false,
     cardToEdit: null,
@@ -280,11 +282,22 @@ class App extends Component {
       this.setState({ displayModel: true, displayCardform: true });
     } else if (type === "Column") {
       this.setState({ displayModel: true, displayColumnform: true });
+    } else if (type === "Menu") {
+      this.setState({ displayModel: true, displayMenu: true });
     } else if (type === "Cancel") {
-      this.setState({ displayModel: false, displayCardform: false, displayColumnform: false, cardToEdit: null });
+      this.setState({ displayModel: false, displayMenu: false, displayCardform: false, displayColumnform: false, cardToEdit: null });
     }
   };
 
+  exportState = () => {
+    let dataStr = JSON.stringify(this.state.boards);
+    let dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+    let fileName = 'myBoard.json';
+    let downloadLink = document.createElement('a');
+    downloadLink.setAttribute('href', dataUri);
+    downloadLink.setAttribute('download', fileName);
+    downloadLink.click();
+  };
 
   /// React Render
   render() {
@@ -293,10 +306,15 @@ class App extends Component {
         <Backdrop display={this.state.displayModel} />
         <Toolbar
           boardName={this.state.boards[this.state.activeBoardIndex].name}
+          menuClicked={this.modelDisplayHandler}
           newColumnGenericClicked={this.modelDisplayHandler}
           newCardGenericClicked={this.modelDisplayHandler}
           newCardDisabled={this.state.boards[this.state.activeBoardIndex].columns.length <= 0} />
         <Modal display={this.state.displayModel}>
+          <Menu
+            display={this.state.displayMenu}
+            downloadClicked={this.exportState}
+            cancelClicked={this.modelDisplayHandler} />
           <Cardform
             display={this.state.displayCardform}
             columns={this.state.boards[this.state.activeBoardIndex].columns}
