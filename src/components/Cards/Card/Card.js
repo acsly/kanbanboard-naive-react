@@ -4,7 +4,7 @@ import classes from './Card.css';
 import Labels from '../../Labels/Labels';
 
 const card = (props) => (
-    <div className={classes.Card}>
+    <div className={classes.Card} draggable="true" onDragStart={(index) => props.drag(index, props.id)}>
         <button className={classes.editBtn} onClick={(index) => props.editCardClicked(props.id, index)}>Edit</button>
         <button className={classes.deleteBtn} onClick={(index) => props.deleteCardClicked(props.id, index)}>X</button>
         <div className={classes.cardContent}>

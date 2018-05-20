@@ -13,7 +13,10 @@ const columns = (props) => props.columns.map((column, index) => {
         editCardClicked={props.editCardClicked.bind(this, index)}
         deleteCardClicked={props.deleteCardClicked.bind(this, index)}
         deleteColumnClicked={props.deleteColumnClicked}
-        removeLabelClicked={props.removeLabelClicked.bind(this, index)} />
+        removeLabelClicked={props.removeLabelClicked.bind(this, index)}
+        drag={props.drag.bind(this, index)}
+        drop={props.drop.bind(this, index)}
+        allowDrop={props.allowDrop} />
 });
 
 

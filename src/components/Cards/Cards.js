@@ -11,7 +11,8 @@ const cards = (props) => props.cards.map((card, index) => {
         key={card.id}
         deleteCardClicked={props.deleteCardClicked}
         editCardClicked={props.editCardClicked}
-        removeLabelClicked={props.removeLabelClicked.bind(this, index)} />
+        removeLabelClicked={props.removeLabelClicked.bind(this, index)}
+        drag={props.drag} />
 });
 
 

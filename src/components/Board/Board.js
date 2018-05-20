@@ -11,7 +11,10 @@ const board = (props) => (
             editCardClicked={props.editCardClicked}
             deleteCardClicked={props.deleteCardClicked}
             deleteColumnClicked={props.deleteColumnClicked}
-            removeLabelClicked={props.removeLabelClicked} />
+            removeLabelClicked={props.removeLabelClicked}
+            drag={props.drag}
+            drop={props.drop}
+            allowDrop={props.allowDrop} />
     </div>
 );
 

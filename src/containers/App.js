@@ -22,6 +22,9 @@ class App extends Component {
     displayCardform: false,
     displayColumnform: false,
     cardToEdit: null,
+    sourceColumnIndex: null,
+    targetColumnIndex: null,
+    movingCardId: null,
     boards: [
       {
         id: 1000,
@@ -219,7 +222,19 @@ class App extends Component {
     this.setState({ boards: boards });
   };
 
-  /// CARD RELATED HANDLER METHODS
+  moveCardToTargetColumn = () => {
+    const boards = this.state.boards.slice();
+    let card = boards[this.state.activeBoardIndex].columns[this.state.sourceColumnIndex].cards.filter((c) => {
+      return c.id === this.state.movingCardId;
+    });
+    card = card[0];
+    this.deleteCardHandler(this.state.sourceColumnIndex, card.id);
+    console.log(this.state.targetColumnIndex);
+    boards[this.state.activeBoardIndex].columns[this.state.targetColumnIndex].cards.push(this.createNewCardStructure(card.id, card.title, card.description, card.labels));
+    this.setState({ boards: boards, sourceColumnIndex: null, targetColumnIndex: null, movingCardId: null });
+  };
+
+  /// LABEL RELATED HANDLER METHODS
   /**
    * 
    * 
@@ -275,12 +290,12 @@ class App extends Component {
     return newColumn;
   };
 
-  createNewCardStructure = (id, title, description) => {
+  createNewCardStructure = (id, title, description, labels) => {
     const newCard = {
       id: id,
       title: title ? title : "title",
       description: description ? description : "description",
-      labels: []
+      labels: labels ? labels : []
     };
     return newCard;
   };
@@ -310,6 +325,31 @@ class App extends Component {
     } else if (type === "Cancel") {
       this.setState({ displayModel: false, displayMenu: false, displayUpload: false, displayCardform: false, displayColumnform: false, cardToEdit: null });
     }
+  };
+
+  /// DRAG AND DROP METHODS
+  /**
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   */
+
+  drag = (index, event, id) => {
+    this.setState({ sourceColumnIndex: index, movingCardId: id });
+  };
+
+  drop = (index, event) => {
+    event.preventDefault();
+    console.log("drop", index, event);
+    this.setState({ targetColumnIndex: index }, this.moveCardToTargetColumn);
+
+  };
+
+  allowDrop = (event) => {
+    event.preventDefault();
   };
 
   /// IMPORT AND EXPORT JSON METHODS
@@ -379,7 +419,10 @@ class App extends Component {
           editCardClicked={this.editCardHandler}
           deleteCardClicked={this.deleteCardHandler}
           deleteColumnClicked={this.deleteColumnHandler}
-          removeLabelClicked={this.removeLabelHandler} />
+          removeLabelClicked={this.removeLabelHandler}
+          drag={this.drag}
+          drop={this.drop}
+          allowDrop={this.allowDrop} />
       </div>
     );
   }
