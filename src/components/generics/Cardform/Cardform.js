@@ -14,7 +14,8 @@ const cardform = (props) => {
         description,
         labels = [],
         labelName = "",
-        labelColor = "#FFF";
+        labelColor = "#FFF",
+        labelDisabled = false;
     if (props.columns.length > 0) {
         selectedOption = props.columns[0].id
     } else {
@@ -30,9 +31,11 @@ const cardform = (props) => {
         } else {
             id = null;
             selectedOption = props.cardToEdit.columnIndex;
+            labelDisabled = true;
         }
     } else {
         id = null;
+        labelDisabled = true;
     }
     const onChangeHandler = (event) => {
         if (event.target.id === "card-title") {
@@ -73,7 +76,7 @@ const cardform = (props) => {
                     id="labels-color"
                     type="color"
                     onChange={(event) => onChangeHandler(event)}
-                    defaultValue="#ffffff" >
+                    defaultValue="#ffffff">
                 </input>
                 <input
                     id="labels-name"
@@ -82,7 +85,8 @@ const cardform = (props) => {
                     placeholder="label"
                     onChange={(event) => onChangeHandler(event)} >
                 </input>
-                <button onClick={() => props.addLabelClicked(labelName, labelColor)}>+</button>
+                <button disabled={labelDisabled} onClick={() => props.addLabelClicked(labelName, labelColor)}>+</button>
+                <p className={classes.labelNotice} hidden={!labelDisabled}>*Please add labels after the card is created.</p>
                 <Labels
                     labels={labels}
                     removeLabelClicked={props.removeLabelClicked} />
