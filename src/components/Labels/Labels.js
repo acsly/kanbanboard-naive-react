@@ -8,7 +8,7 @@ const labels = (props) => props.labels.map((label, index) => {
         name={label.name}
         color={label.color}
         key={label.id}
-        deleteLabelClicked={props.deleteLabelClicked} />
+        removeLabelClicked={props.removeLabelClicked} />
 });
 
 export default labels;

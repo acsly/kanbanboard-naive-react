@@ -10,7 +10,9 @@ const card = (props) => (
         <div className={classes.cardContent}>
             <p>{props.title}</p>
             <p>{props.description}</p>
-            <Labels labels={props.labels} />
+            <Labels
+                labels={props.labels}
+                removeLabelClicked={props.removeLabelClicked} />
         </div>
     </div>
 );

@@ -134,7 +134,7 @@ class App extends Component {
     this.modelDisplayHandler("Card");
   };
 
-  saveCardHandler = (id, title, description, columnId) => {
+  saveCardHandler = (id, title, description, columnId, labels) => {
     //if the card is being edited
     if (id !== null) {
       const boards = this.state.boards.slice();
@@ -145,6 +145,7 @@ class App extends Component {
       //Set new values for the card edited
       boards[this.state.activeBoardIndex].columns[index].cards[cardIndex].title = title;
       boards[this.state.activeBoardIndex].columns[index].cards[cardIndex].description = description;
+      boards[this.state.activeBoardIndex].columns[index].cards[cardIndex].labels = labels;
 
       this.setState({ boards: boards, displayModel: false, displayCardform: false, cardToEdit: null });
     }
@@ -210,6 +211,34 @@ class App extends Component {
     const index = this.state.cardToEdit.columnIndex;
     card.labels.push(this.createNewLabelStructure(newId, name, color));
     this.setState({ cardToEdit: { card: card, columnIndex: index }, idIterator: newId });
+  };
+
+  removeLabelHandler = (columnIndex, cardIndex, id) => {
+    console.log(columnIndex, cardIndex, id);
+    if (this.state.cardToEdit !== null) {
+      console.log("burdayım");
+      const card = Object.assign({}, this.state.cardToEdit.card);
+      console.log(card);
+      const index = this.state.cardToEdit.columnIndex;
+      const labels = card.labels.filter(l => {
+        console.log(l.id, id);
+        return l.id !== columnIndex; // Somehow, when called from cardform, id returns in the columnIndex variable, what is compared here is actually the id of the label aliased by columnIndex!!
+      });
+      console.log(labels);
+      card.labels = labels;
+      this.setState({ cardToEdit: { card: card, columnIndex: index } });
+    } else if (columnIndex !== undefined || cardIndex !== undefined) {
+      console.log("nerdesin");
+      const boards = this.state.boards.slice();
+      const labels = boards[this.state.activeBoardIndex].columns[columnIndex].cards[cardIndex].labels.filter(l => {
+        return l.id !== id;
+      });
+      console.log(labels);
+      boards[this.state.activeBoardIndex].columns[columnIndex].cards[cardIndex].labels = labels;
+      this.setState({ boards: boards });
+    }
+
+
   };
 
 
@@ -282,7 +311,8 @@ class App extends Component {
             cancelClicked={this.modelDisplayHandler}
             saveClicked={this.saveCardHandler}
             cardToEdit={this.state.cardToEdit}
-            addLabelClicked={this.addNewLabelHandler} />
+            addLabelClicked={this.addNewLabelHandler}
+            removeLabelClicked={this.removeLabelHandler} />
           <Columnform
             display={this.state.displayColumnform}
             cancelClicked={this.modelDisplayHandler}
@@ -294,7 +324,8 @@ class App extends Component {
           newCardClicked={this.newCardHandler}
           editCardClicked={this.editCardHandler}
           deleteCardClicked={this.deleteCardHandler}
-          deleteColumnClicked={this.deleteColumnHandler} />
+          deleteColumnClicked={this.deleteColumnHandler}
+          removeLabelClicked={this.removeLabelHandler} />
       </div>
     );
   }

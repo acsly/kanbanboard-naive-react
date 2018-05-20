@@ -10,7 +10,8 @@ const cards = (props) => props.cards.map((card, index) => {
         labels={card.labels}
         key={card.id}
         deleteCardClicked={props.deleteCardClicked}
-        editCardClicked={props.editCardClicked}/>
+        editCardClicked={props.editCardClicked}
+        removeLabelClicked={props.removeLabelClicked.bind(this, index)} />
 });
 
 

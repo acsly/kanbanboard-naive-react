@@ -12,7 +12,8 @@ const columns = (props) => props.columns.map((column, index) => {
         newCardClicked={() => props.newCardClicked(index)}
         editCardClicked={props.editCardClicked.bind(this, index)}
         deleteCardClicked={props.deleteCardClicked.bind(this, index)}
-        deleteColumnClicked={props.deleteColumnClicked} />
+        deleteColumnClicked={props.deleteColumnClicked}
+        removeLabelClicked={props.removeLabelClicked.bind(this, index)} />
 });
 
 

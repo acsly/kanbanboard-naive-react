@@ -12,7 +12,7 @@ const cardform = (props) => {
         id,
         title,
         description,
-        labels,
+        labels = [],
         labelName = "",
         labelColor = "#FFF";
     if (props.columns.length > 0) {
@@ -84,12 +84,14 @@ const cardform = (props) => {
                     onChange={(event) => onChangeHandler(event)} >
                 </input>
                 <button onClick={() => props.addLabelClicked(labelName, labelColor)}>+</button>
-                <Labels labels={labels} />
+                <Labels
+                    labels={labels}
+                    removeLabelClicked={props.removeLabelClicked} />
                 <div className={classes.center}>
                     <select id="column-selector" className={classes.columnSelector} onChange={(event) => onChangeHandler(event)} style={props.cardToEdit ? { "display": "none" } : {}}>
                         {options}
                     </select>
-                    <button onClick={() => props.saveClicked(id, title, description, selectedOption)}>Save</button>
+                    <button onClick={() => props.saveClicked(id, title, description, selectedOption, labels)}>Save</button>
                 </div>
             </div>
         </div >

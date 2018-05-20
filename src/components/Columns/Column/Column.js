@@ -15,7 +15,8 @@ const column = (props) => (
             <Cards
                 cards={props.cards}
                 deleteCardClicked={props.deleteCardClicked}
-                editCardClicked={props.editCardClicked} />
+                editCardClicked={props.editCardClicked}
+                removeLabelClicked={props.removeLabelClicked} />
         </div>
     </div>
 );
