@@ -165,7 +165,6 @@ module.exports = {
                 options: {
                   importLoaders: 1,
                   modules: true,
-                  localIdentName: '[name]__[local]__[hash:base64:5]'
                 },
               },
               {
@@ -177,12 +176,6 @@ module.exports = {
                   plugins: () => [
                     require('postcss-flexbugs-fixes'),
                     autoprefixer({
-                      browsers: [
-                        '>1%',
-                        'last 4 versions',
-                        'Firefox ESR',
-                        'not ie < 9', // React doesn't support IE8 anyway
-                      ],
                       flexbox: 'no-2009',
                     }),
                   ],
@@ -217,12 +210,12 @@ module.exports = {
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     // In development, this will be an empty string.
-    new InterpolateHtmlPlugin(env.raw),
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
     }),
+    
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),
     // Makes some environment variables available to the JS code, for example:
@@ -245,6 +238,7 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
